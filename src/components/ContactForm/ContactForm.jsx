@@ -1,62 +1,67 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { Button, Form, Input } from './ContactFormStyled';
 
-export default class ContactForm extends Component {
-  state = { name: '', number: '' };
+export const ContactForm = ({ addContact }) => {
+  const [fullName, setFullName] = useState('');
+  const [number, setNumber] = useState('');
+  // state = { name: '', number: '' };
 
   // вводимо в інпут
-  hendleAddInput = e => {
+  const handleAddInput = e => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    if (name === 'name') {
+      setFullName(value);
+    } else {
+      setNumber(value);
+    }
   };
 
   //додаємо до списку
-  hendleFormSubmit = e => {
+  const handleFormSubmit = e => {
     e.preventDefault();
 
-    const { name, number } = this.state;
-    if (name.trim() === '' || number.trim() === '') {
+    if (fullName.trim() === '' || number.trim() === '') {
       return;
     }
 
-    const newContact = { id: nanoid(), name, number };
-    this.setState({ name: '', number: '' });
-    this.props.newContact(newContact);
+    const newContact = { id: nanoid(), fullName, number };
+    setFullName('');
+    setNumber('');
+    addContact(newContact);
   };
 
-  render() {
-    const { name, number } = this.state;
-    return (
-      <Form onSubmit={this.hendleFormSubmit}>
-        <label htmlFor="name">
-          Name
-          <Input
-            value={name}
-            id="name"
-            type="text"
-            name="name"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            onChange={this.hendleAddInput}
-            placeholder="Name Surname"
-          />
-        </label>
-        <label htmlFor="name">
-          Number
-          <Input
-            value={number}
-            id="name"
-            type="tel"
-            name="number"
-            title="Phone number must contain digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            onChange={this.hendleAddInput}
-            placeholder="Phone Number"
-          />
-        </label>
-        <Button>Add contact</Button>
-      </Form>
-    );
-  }
-}
+  return (
+    <Form onSubmit={handleFormSubmit}>
+      <label htmlFor="name">
+        Name
+        <Input
+          value={fullName}
+          id="name"
+          type="text"
+          name="name"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+          onChange={handleAddInput}
+          placeholder="Name Surname"
+          autoComplete="false"
+        />
+      </label>
+      <label htmlFor="number">
+        Number
+        <Input
+          value={number}
+          id="number"
+          type="tel"
+          name="number"
+          title="Phone number must contain digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+          onChange={handleAddInput}
+          placeholder="Phone Number"
+          autoComplete="false"
+        />
+      </label>
+      <Button>Add contact</Button>
+    </Form>
+  );
+};

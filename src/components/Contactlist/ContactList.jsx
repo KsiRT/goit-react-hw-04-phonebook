@@ -6,11 +6,11 @@ export const ContactList = ({ contacts, onDelete }) => {
     <List>
       {contacts.map(contact => (
         <Item key={contact.id}>
-          <Name>{contact.name} : </Name>
+          <Name>{contact.fullName} : </Name>
           <Number> {contact.number}</Number>
           <Button
             onClick={() => {
-              onDelete(contact.id, contact.name);
+              onDelete(contact.id, contact.fullName);
             }}
           >
             Delete
