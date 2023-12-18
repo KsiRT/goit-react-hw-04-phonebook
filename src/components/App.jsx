@@ -6,7 +6,13 @@ import { ContactList } from './Contactlist/ContactList';
 import { styled } from 'styled-components';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => {
+    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (parsedContacts?.length) {
+      return parsedContacts;
+    }
+    return [];
+  });
 
   const [filter, setFilter] = useState('');
 
@@ -42,13 +48,7 @@ export const App = () => {
     );
   };
 
-  // componentDidMount()
-  useEffect(() => {
-    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
-    if (parsedContacts?.length) {
-      setContacts(parsedContacts);
-    }
-  }, []);
+  // componentDidMount() логіка перенесена в useState
 
   // componentDidUpdate
   //  Записываем контакты из состояния в локал сторедж
