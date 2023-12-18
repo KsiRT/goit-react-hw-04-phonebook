@@ -42,14 +42,7 @@ export const App = () => {
     );
   };
 
-  // componentDidMount() {
-  //   const contacts = localStorage.getItem('contacts');
-  //   const parsedContacts = JSON.parse(contacts);
-  //   if (parsedContacts?.length) {
-  //     this.setState({ contacts: parsedContacts });
-  //   }
-  // }
-
+  // componentDidMount()
   useEffect(() => {
     const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
     if (parsedContacts?.length) {
@@ -57,13 +50,8 @@ export const App = () => {
     }
   }, []);
 
+  // componentDidUpdate
   //  Записываем контакты из состояния в локал сторедж
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
-
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
@@ -84,8 +72,8 @@ export const App = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   justify-content: center;
-  background-color: #8295b8;
+  background-color: #82adba;
   height: 100vh;
 `;
